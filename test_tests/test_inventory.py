@@ -1,6 +1,6 @@
 import pytest
 from playwright.sync_api import Page
-from helper import utils as help
+from utils import helper as help
 from pages import inventory_page
 
 

@@ -1,13 +1,13 @@
 import pytest
 from playwright.sync_api import Page, expect
-from helper import data as constants
-from helper import utils as hp
+from utils import data as constants
+from utils import helper
 from locators import login_locators as lc
 from pages import login_page
 
 @pytest.mark.smoke
 def test_login(page:Page):
-    hp.open_website(page)
+    helper.open_website(page)
     login_page.login_valid(page)
     assert "inventory" in page.url
 
