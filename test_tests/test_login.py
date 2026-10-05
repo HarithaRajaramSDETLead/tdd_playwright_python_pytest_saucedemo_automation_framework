@@ -1,32 +1,34 @@
 import pytest
 from playwright.sync_api import Page, expect
+
+from conftest import open_website
 from utils import data as constants
 from utils import helper
 from locators import login_locators as lc
 from pages import login_page
 
 @pytest.mark.smoke
-def test_login(page:Page):
-    helper.open_website(page)
+def test_login(open_website):
+    page= open_website
     login_page.login_valid(page)
     assert "inventory" in page.url
 
 @pytest.mark.regression
-def test_invalid_username(page:Page):
-    helper.open_website(page)
+def test_invalid_username(open_website):
+    page= open_website
     login_page.login_invalid_username(page)
     helper.assert_login(page,lc.error_locator,constants.error)
 
 @pytest.mark.regression
-def test_invalid_password(page:Page):
-    helper.open_website(page)
+def test_invalid_password(open_website):
+    page=open_website
     login_page.login_invalid_password(page)
     text=page.locator(lc.error_locator).text_content()
     helper.assert_output("Epic sadface: Username and password do not match any user in this service",text)
 
 @pytest.mark.regression
-def test_blank_value(page:Page):
-    helper.open_website(page)
+def test_blank_value(open_website):
+    page = open_website
     login_page.login_blank(page)
     expect(page.locator(lc.error_locator)).to_have_text(constants.blank_error)
 
